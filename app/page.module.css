@@ -129,6 +129,9 @@
 
 /* Mobile */
 @media (max-width: 700px) {
+  .main {
+    padding: 1rem;
+  }
   .content {
     padding: 4rem;
   }
@@ -209,6 +212,10 @@
   .grid {
     grid-template-columns: repeat(2, 50%);
   }
+  .main {
+    padding: 1rem;
+  }
+  
 }
 
 @media (prefers-color-scheme: dark) {
