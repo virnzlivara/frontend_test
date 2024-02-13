@@ -1,6 +1,7 @@
+import { useState } from "react";
 import Select from "react-select";
 
-const Controls = () => {
+const Controls = ({sortFunction}) => {
   const fieldOptions = [
     { label: "Name", value: "name" },
     { label: "Company", value: "company" },
@@ -11,13 +12,20 @@ const Controls = () => {
     { label: "Descending", value: "descending" },
   ];
 
+  const [field, setField] = useState("name")
+  const [direction, setDirection] = useState("ascending")
+  
+
   return (
     <div className="gallery-controls controls">
       <div className="form-group group">
         <label htmlFor="sort-field" className="label">
           Sort Field
         </label>
-        <Select options={fieldOptions} inputId="sort-field" className="input" />
+        <Select options={fieldOptions} inputId="sort-field" className="input" onChange={(value)=>{
+          setField(value!.value);
+          sortFunction(value!.value, direction)
+        }}/>
       </div>
       <div className="form-group group">
         <label htmlFor="sort-direction" className="label">
@@ -27,6 +35,10 @@ const Controls = () => {
           options={directionOptions}
           inputId="sort-direction"
           className="input"
+          onChange={(value)=>{ 
+            setDirection(value!.value);
+            sortFunction(field, value!.value)
+          }}
         />
       </div>
     </div>

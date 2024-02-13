@@ -17,11 +17,33 @@ import { User } from "./types/user";
 export type GalleryProps = {
   users: User[];
 };
+
+ 
 const Gallery = ({ users }: GalleryProps) => {
   const [usersList, setUsersList] = useState(users);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const sortFunc = (field:string, direction:string,) => { 
+    const tmpUser = usersList;
+    setUsersList([])
+    if (direction === "ascending") {
+      const asc = tmpUser.sort((a, b) => { 
+        return (a[field] > b[field] ? -1 : 1)
+      });
+      console.log(asc)
+      setUsersList(asc)
+    } else {
+      const dec = tmpUser.sort((a, b) => { 
+        return (a[field] > b[field] ? -1 : 1)
+      }).reverse()
+      console.log(dec)
+      setUsersList(dec)
+    }
+   
+    
+    
+  }
   const handleModalOpen = (id: number) => {
     const user = usersList.find((item) => item.id === id) || null;
 
@@ -40,13 +62,13 @@ const Gallery = ({ users }: GalleryProps) => {
     <div className="user-gallery">
       <div className="heading">
         <h1 className="title">Users</h1>
-        <Controls />
+        <Controls sortFunction={sortFunc}/>
       </div>
       <div className="items">
         {usersList.map((user, index) => (
           <div
             className="item user-card"
-            key={index}
+            key={user.id}
             onClick={() => handleModalOpen(user.id)}
           >
             <div className="body">
